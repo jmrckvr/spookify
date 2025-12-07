@@ -9,6 +9,18 @@ $password = $data['password'] ?? '';
 $username = $data['username'] ?? ''; // only used for registration
 
 if ($action === 'register') {
+    // Basic validation
+    if (empty($username) || empty($email) || empty($password)) {
+        echo json_encode(["status" => "error", "message" => "All fields are required"]);
+        exit;
+    }
+
+    // Validate email format
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        echo json_encode(["status" => "error", "message" => "Invalid email format"]);
+        exit;
+    }
+
     // Check if email already exists
     $stmt = $pdo->prepare("SELECT id FROM users WHERE email = ?");
     $stmt->execute([$email]);

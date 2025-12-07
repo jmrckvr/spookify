@@ -24,6 +24,7 @@ export function SongCard({ song, showTransfer, currentPlaylistId }: SongCardProp
   const handlePlay = () => {
     setCurrentSong(song);
     setIsPlaying(true);
+    console.log("Playing:", song.title, song.url);
   };
 
   return (

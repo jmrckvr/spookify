@@ -1,10 +1,11 @@
 export interface Song {
   id: string;
   title: string;
-  artist: string;
-  album: string;
-  duration: string;
+  artist: string;   // resolved via join
+  album: string;    // resolved via join
+  duration: number; // keep numeric for math
   cover: string;
+  url: string;
 }
 
 export interface Playlist {
