@@ -13,15 +13,18 @@ const Index = () => {
     <MusicProvider>
       <div className="h-screen flex flex-col bg-background overflow-hidden">
         <Navbar onAuthClick={() => setAuthModalOpen(true)} />
-        
+
         <div className="flex-1 flex overflow-hidden">
           <Sidebar />
           <MainContent />
         </div>
-        
+
         <PlayerBar />
-        
-        <AuthModal isOpen={authModalOpen} onClose={() => setAuthModalOpen(false)} />
+
+        <AuthModal
+          isOpen={authModalOpen}
+          onClose={() => setAuthModalOpen(false)}
+        />
       </div>
     </MusicProvider>
   );

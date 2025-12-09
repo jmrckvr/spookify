@@ -29,7 +29,11 @@ interface MusicContextType {
 
   addSongToPlaylist: (songId: number, playlistId: number) => void;
   removeSongFromPlaylist: (songId: number, playlistId: number) => void;
-  transferSong: (songId: number, fromPlaylistId: number, toPlaylistId: number) => void;
+  transferSong: (
+    songId: number,
+    fromPlaylistId: number,
+    toPlaylistId: number
+  ) => void;
   createPlaylist: (name: string) => void;
   playNext: () => void;
   playPrevious: () => void;
@@ -49,7 +53,9 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   const [volume, setVolume] = useState(70);
   const [progress, setProgress] = useState(0);
   const [user, setUser] = useState<User | null>(null);
-  const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist | null>(null);
+  const [selectedPlaylist, setSelectedPlaylist] = useState<Playlist | null>(
+    null
+  );
   const [searchQuery, setSearchQuery] = useState("");
 
   // 🎵 Fetch playlists
@@ -66,7 +72,9 @@ export function MusicProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const fetchSongs = async () => {
       if (selectedPlaylist) {
-        const res = await fetch(`/api/getSongs.php?playlist_id=${selectedPlaylist.id}`);
+        const res = await fetch(
+          `/api/getSongs.php?playlist_id=${selectedPlaylist.id}`
+        );
         const data = await res.json();
         setSongs(data);
         setSelectedPlaylist((prev) => (prev ? { ...prev, songs: data } : prev));
@@ -84,7 +92,9 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     if (!audioRef.current || !currentSong) return;
     audioRef.current.src = `/${currentSong.url}`;
     if (isPlaying) {
-      audioRef.current.play().catch((err) => console.error("Playback failed:", err));
+      audioRef.current
+        .play()
+        .catch((err) => console.error("Playback failed:", err));
     } else {
       audioRef.current.pause();
     }
@@ -131,8 +141,8 @@ export function MusicProvider({ children }: { children: ReactNode }) {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({ id: playlistId }),
     });
-    setPlaylists((prev) => prev.filter((p) => p.id !== Number(playlistId)));
-    if (selectedPlaylist?.id === Number(playlistId)) {
+    setPlaylists((prev) => prev.filter((p) => p.id !== playlistId));
+    if (selectedPlaylist?.id === playlistId) {
       setSelectedPlaylist(null);
     }
   };
@@ -153,8 +163,10 @@ export function MusicProvider({ children }: { children: ReactNode }) {
     });
 
     // Refresh songs for the current playlist
-    if (Number(selectedPlaylist?.id) === fromPlaylistId) {
-      const res = await fetch(`/api/getSongs.php?playlist_id=${fromPlaylistId}`);
+    if (String(selectedPlaylist?.id) === String(fromPlaylistId)) {
+      const res = await fetch(
+        `/api/getSongs.php?playlist_id=${fromPlaylistId}`
+      );
       const data = await res.json();
       setSongs(data);
       setSelectedPlaylist((prev) => (prev ? { ...prev, songs: data } : prev));
@@ -168,7 +180,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
       body: JSON.stringify({ song_id: songId, playlist_id: playlistId }),
     });
 
-    if (selectedPlaylist?.id === Number(playlistId)) {
+    if (selectedPlaylist?.id === playlistId) {
       const res = await fetch(`/api/getSongs.php?playlist_id=${playlistId}`);
       const data = await res.json();
       setSongs(data);
@@ -183,7 +195,7 @@ export function MusicProvider({ children }: { children: ReactNode }) {
       body: JSON.stringify({ song_id: songId, playlist_id: playlistId }),
     });
 
-    if (selectedPlaylist?.id === Number(playlistId)) {
+    if (selectedPlaylist?.id === String(playlistId)) {
       const res = await fetch(`/api/getSongs.php?playlist_id=${playlistId}`);
       const data = await res.json();
       setSongs(data);

@@ -1,0 +1,70 @@
+/*
+  Styles for harmony-hub components to be merged into Spookify
+  These are the custom CSS classes used by the extracted pages and components
+*/
+
+/* Filter Pills */
+.filter-pill {
+  @apply px-4 py-2 rounded-full text-sm font-medium transition-all duration-200;
+}
+
+.filter-pill-active {
+  @apply bg-primary text-primary-foreground;
+}
+
+.filter-pill-inactive {
+  @apply bg-secondary text-muted-foreground hover:bg-accent hover:text-foreground;
+}
+
+/* Media Card */
+.media-card {
+  @apply cursor-pointer transition-transform duration-300;
+}
+
+.media-card:hover {
+  @apply transform -translate-y-1;
+}
+
+.play-button-overlay {
+  @apply absolute inset-0 flex items-center justify-center bg-black/40 rounded-md opacity-0 group-hover:opacity-100 transition-opacity duration-200;
+  @apply hover:bg-black/60;
+}
+
+/* Genre Card */
+.genre-card {
+  @apply relative overflow-hidden rounded-lg cursor-pointer group;
+  aspect-ratio: 2 / 1;
+}
+
+.genre-card > div {
+  @apply hover:brightness-110 transition-all duration-300;
+}
+
+/* Song Row */
+.song-row {
+  @apply flex items-center gap-4 px-4 py-3 rounded-md cursor-pointer transition-colors duration-200;
+  @apply hover:bg-accent/50;
+}
+
+/* Animation */
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-in-out;
+}
+
+/* Utilities */
+.truncate {
+  @apply overflow-hidden text-overflow-ellipsis whitespace-nowrap;
+}
+
+.min-w-0 {
+  @apply min-width-0;
+}
